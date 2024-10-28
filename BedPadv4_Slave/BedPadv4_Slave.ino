@@ -152,11 +152,11 @@ void loop()
   ///////////////////////////////////////////////////////////////////////////////
   delay(1);
 }
-void requesttt(){
-  int two_byte = 1022;
-  Wire.write(getByteAt(two_byte,1)); //High byte
-  Wire.write(getByteAt(two_byte,0)); //Low byte
-}
+//void requesttt(){
+//  int two_byte = 1022;
+//  Wire.write(getByteAt(two_byte,1)); //High byte
+//  Wire.write(getByteAt(two_byte,0)); //Low byte
+//}
 void requestEvent() {
   for(int i=0;i<=23;i++){
     Wire.write(buffer[i]);
