@@ -7,7 +7,7 @@
 
 #define MQTT_MAX_PACKET_SIZE 2048
 
-const char* BedNumber = "BedPad01";
+const char* BedNumber = "PAD#01";
 
 WiFiUDP udp;
 char incomingPacket[255];
@@ -55,11 +55,8 @@ void reconnect() {
   }
 }
 
-void setup() {
-  Serial.begin(115200);
-  Wire.begin();  // I2C master olarak başla (default: SDA=8, SCL=9 on ESP32-C3)
-
-  setup_wifi();
+void udp_loop(){
+  while(1){
   int packetSize = udp.parsePacket();
   if (packetSize) {
     int len = udp.read(incomingPacket, 255);
@@ -72,14 +69,23 @@ void setup() {
       String dataStr = String(incomingPacket);
       int idx = dataStr.indexOf(":") + 1;
       String ipStr = dataStr.substring(idx);
-      brokerIP.fromString(ipStr);
+      brokerIP = udp.remoteIP();
       Serial.print(BedNumber);
       Serial.print(" icin ");
       Serial.print("MQTT Broker IP tespit edildi: ");
       Serial.println(brokerIP);
+      break;
       // Burada brokerIP'yi mqtt bağlantısı için kullanabilirsin
     }
   }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();  // I2C master olarak başla (default: SDA=8, SCL=9 on ESP32-C3)
+  setup_wifi();
+  udp_loop();
   client.setServer(brokerIP, 1883);
 }
 
