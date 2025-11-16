@@ -12,7 +12,7 @@
 ////////////////////////
 #define ARDUCOMM_SDA A4
 #define ARDUCOMM_SCL A5
-#define ADDR 12
+#define ADDR 9
 #define ARDUCOMM_ADRESS (ADDR+7) //Adress=X queue: X-7 eg. Adress=8 queue:8-7=1
 ////////////////////////
 #define SHT1_SDA 2
